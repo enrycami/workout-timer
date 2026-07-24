@@ -41,12 +41,18 @@
 
     <!-- WORKOUT RUNNER VIEW -->
     <section id="workout-view" class="view">
-      <div id="phase-badge" class="badge">WORKOUT</div>
-      <h1 id="current-title">Exercise Name</h1>
+        <div id="phase-badge" class="badge">WORKOUT</div>
+        <h1 id="current-title">Exercise Name</h1>
       
-      <div class="timer-display">
-        <span id="timer-countdown">00:00</span>
-      </div>
+        <div class="timer-container">
+            <svg class="progress-ring" width="280" height="280" viewBox="0 0 280 280">
+                <circle class="progress-ring__bg" r="120" cx="140" cy="140" />
+                <circle id="progress-bar" class="progress-ring__circle" r="120" cx="140" cy="140" />
+            </svg>
+            <div class="timer-display">
+                <span id="timer-countdown">0s</span>
+            </div>
+        </div>
 
       <div class="next-up-banner">
         <span>Next: </span><strong id="next-title">Rest</strong>

@@ -52,6 +52,11 @@ const timerCountdown = document.getElementById('timer-countdown');
 const nextTitle = document.getElementById('next-title');
 const pauseBtn = document.getElementById('pause-btn');
 
+const progressBar = document.getElementById('progress-bar');
+const CIRCUMFERENCE = 2 * Math.PI * 120; // 753.98
+let totalStepDuration = 0;
+progressBar.style.strokeDasharray = `${CIRCUMFERENCE} ${CIRCUMFERENCE}`;
+
 // --- HELPER FUNCTIONS ---
 function parseTime(input) {
   return parseInt(input, 10) || 0;
@@ -155,8 +160,15 @@ function runStep() {
 
   const step = workoutSequence[currentStepIndex];
   timeRemaining = step.duration;
-  
-  // Update UI
+  totalStepDuration = step.duration; // 1. Set total duration BEFORE updating display
+
+  // 2. Snap ring back to 100% instantly without animation delay
+  progressBar.style.transition = 'none';
+  progressBar.style.strokeDashoffset = '0';
+  progressBar.getBoundingClientRect(); // Force browser reflow
+  progressBar.style.transition = 'stroke-dashoffset 1s linear, stroke 0.3s ease';
+
+  // Update UI text
   phaseBadge.textContent = step.type;
   workoutView.className = `view active ${step.type.toLowerCase()}`;
   currentTitle.textContent = step.name;
@@ -173,7 +185,7 @@ function runStep() {
     timeRemaining--;
     updateTimerDisplay();
 
-    if (timeRemaining <= 5 && timeRemaining > 0) {
+    if (timeRemaining <= 3 && timeRemaining > 0) {
       alertSounds.countdown();
     }
 
@@ -186,6 +198,14 @@ function runStep() {
 
 function updateTimerDisplay() {
   timerCountdown.textContent = formatTime(timeRemaining);
+  
+  // Guard against division by zero
+  if (!totalStepDuration) return;
+
+  // Aim for upcoming second so CSS smoothly animates towards it
+  const targetTime = Math.max(0, timeRemaining - 1);
+  const fraction = targetTime / totalStepDuration;
+  progressBar.style.strokeDashoffset = CIRCUMFERENCE - (fraction * CIRCUMFERENCE);
 }
 
 function endWorkout() {

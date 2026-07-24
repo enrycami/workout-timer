@@ -186,3 +186,49 @@ input:focus {
 .controls .btn {
   flex: 1;
 }
+
+.timer-container {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem auto;
+}
+
+.progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-270deg) scaleX(-1); /* Rotate to start countdown at 12 o'clock, scaleX to flip clockwise */
+}
+
+.progress-ring__bg {
+  stroke: var(--card-bg);
+  stroke-width: 12;
+  fill: transparent;
+}
+
+.progress-ring__circle {
+  stroke: var(--accent-work);
+  stroke-width: 12;
+  fill: transparent;
+  stroke-linecap: round;
+  /* Circumference = 2 * PI * 120 ≈ 753.98 */
+  stroke-dasharray: 753.98; 
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+/* Change ring color during rest phase */
+#workout-view.rest .progress-ring__circle {
+  stroke: var(--accent-rest);
+}
+
+.timer-display {
+  font-size: 3.5rem;
+  font-weight: 900;
+  z-index: 1;
+  margin: 0;
+}
