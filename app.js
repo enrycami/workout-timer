@@ -73,6 +73,33 @@ function saveData() {
     localStorage.setItem('timer_rest', restDuration);
 }
 
+let wakeLock = null;
+
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+    }
+  } catch (err) {
+    console.warn(`Wake Lock Error: ${err.name}, ${err.message}`);
+  }
+}
+
+function releaseWakeLock() {
+  if (wakeLock !== null) {
+    wakeLock.release().then(() => {
+      wakeLock = null;
+    });
+  }
+}
+
+// Re-acquire the wake lock if the user tabs away and returns
+document.addEventListener('visibilitychange', async () => {
+  if (wakeLock !== null && document.visibilityState === 'visible' && !isPaused) {
+    await requestWakeLock();
+  }
+});
+
 // --- SETUP VIEW LOGIC ---
 
 function updateTotalWorkoutTime() {
@@ -173,6 +200,7 @@ function startWorkout() {
   currentStepIndex = 0;
   setupView.classList.remove('active');
   workoutView.classList.add('active');
+  requestWakeLock();
   runStep();
 }
 
@@ -240,6 +268,8 @@ function endWorkout() {
   setupView.classList.add('active');
   isPaused = false;
   pauseBtn.textContent = 'Pause';
+
+  releaseWakeLock();
 }
 
 // Control Event Listeners
@@ -247,8 +277,14 @@ document.getElementById('start-workout-btn').addEventListener('click', startWork
 document.getElementById('quit-btn').addEventListener('click', endWorkout);
 
 pauseBtn.addEventListener('click', () => {
-  isPaused = !isPaused;
-  pauseBtn.textContent = isPaused ? 'Resume' : 'Pause';
+    isPaused = !isPaused;
+    pauseBtn.textContent = isPaused ? 'Resume' : 'Pause';
+
+    if (isPaused) {
+        releaseWakeLock(); // Let screen sleep while paused
+    } else {
+        requestWakeLock(); // Keep awake when resumed
+    }
 });
 
 document.getElementById('skip-btn').addEventListener('click', () => {
