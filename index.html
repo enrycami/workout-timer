@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Interval Timer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- SETUP VIEW -->
+    <section id="setup-view" class="view active">
+      <header>
+        <h1>Workout Setup</h1>
+      </header>
+
+      <form id="add-exercise-form" class="card">
+        <div class="input-group">
+          <input type="text" id="ex-name" placeholder="Exercise (e.g. Pushups)" required />
+          <input type="number" id="ex-duration" placeholder="Duration (sec)" min="1" required />
+        </div>
+        <button type="submit" class="btn btn-primary">+ Add Exercise</button>
+      </form>
+
+      <div class="card global-settings">
+        <label for="rest-duration">Global Rest Time (seconds):</label>
+        <input type="number" id="rest-duration" min="0" value="20" />
+      </div>
+
+      <div class="exercise-list-container">
+        <h2>Exercises</h2>
+        <ul id="exercise-list"></ul>
+      </div>
+
+      <button id="start-workout-btn" class="btn btn-accent btn-large">Start Workout 🚀</button>
+    </section>
+
+    <!-- WORKOUT RUNNER VIEW -->
+    <section id="workout-view" class="view">
+      <div id="phase-badge" class="badge">WORKOUT</div>
+      <h1 id="current-title">Exercise Name</h1>
+      
+      <div class="timer-display">
+        <span id="timer-countdown">00:00</span>
+      </div>
+
+      <div class="next-up-banner">
+        <span>Next: </span><strong id="next-title">Rest</strong>
+      </div>
+
+      <div class="controls">
+        <button id="pause-btn" class="btn btn-control">Pause</button>
+        <button id="skip-btn" class="btn btn-control">Skip ⏭</button>
+        <button id="quit-btn" class="btn btn-danger">End Workout</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
