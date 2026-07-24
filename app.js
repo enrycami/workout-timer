@@ -211,7 +211,7 @@ function runStep() {
     timeRemaining--;
     updateTimerDisplay();
 
-    if (timeRemaining <= 3 && timeRemaining > 0) {
+    if (timeRemaining <= 5 && timeRemaining > 0) {
       alertSounds.countdown();
     }
 
