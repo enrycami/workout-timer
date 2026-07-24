@@ -57,6 +57,8 @@ const CIRCUMFERENCE = 2 * Math.PI * 120; // 753.98
 let totalStepDuration = 0;
 progressBar.style.strokeDasharray = `${CIRCUMFERENCE} ${CIRCUMFERENCE}`;
 
+const startBtnTimeEl = document.getElementById('start-btn-time');
+
 // --- HELPER FUNCTIONS ---
 function parseTime(input) {
   return parseInt(input, 10) || 0;
@@ -67,11 +69,28 @@ function formatTime(seconds) {
 }
 
 function saveData() {
-  localStorage.setItem('timer_exercises', JSON.stringify(exercises));
-  localStorage.setItem('timer_rest', restDuration);
+    localStorage.setItem('timer_exercises', JSON.stringify(exercises));
+    localStorage.setItem('timer_rest', restDuration);
 }
 
 // --- SETUP VIEW LOGIC ---
+
+function updateTotalWorkoutTime() {
+  if (exercises.length === 0) {
+    startBtnTimeEl.textContent = '(0s)';
+    return;
+  }
+
+  const totalExerciseSecs = exercises.reduce((sum, ex) => sum + ex.duration, 0);
+  const totalRestSecs = Math.max(0, exercises.length - 1) * restDuration;
+  const totalSecs = totalExerciseSecs + totalRestSecs;
+
+  const m = Math.floor(totalSecs / 60);
+  const s = totalSecs % 60;
+  const formatted = m > 0 ? `${m}m ${s}s` : `${s}s`;
+
+  startBtnTimeEl.textContent = `(${formatted})`;
+}
 function renderExercises() {
   exerciseList.innerHTML = '';
   exercises.forEach((ex, index) => {
@@ -86,8 +105,15 @@ function renderExercises() {
       </div>
     `;
     exerciseList.appendChild(li);
+    updateTotalWorkoutTime()
   });
 }
+
+restInput.addEventListener('change', (e) => {
+  restDuration = Math.max(0, parseInt(e.target.value, 10) || 0);
+  saveData();
+  updateTotalWorkoutTime();
+});
 
 addForm.addEventListener('submit', (e) => {
   e.preventDefault();

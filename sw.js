@@ -4,7 +4,13 @@ const ASSETS = [
   './index.html',
   './style.css',
   './app.js',
-  './manifest.json'
+  './site.webmanifest',
+  './icons/favicon.ico',
+  './icons/favicon.svg',
+  './icons/favicon-96x96.png',
+  './icons/apple-touch-icon.png',
+  './icons/web-app-manifest-192x192.png',
+  './icons/web-app-manifest-512x512.png'
 ];
 
 self.addEventListener('install', (e) => {

@@ -1,43 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>Interval Timer</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱️</text></svg>">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <title>Workout Interval Timer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="./site.webmanifest" />
+
+    <link rel="icon" type="image/png" href="./icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg" />
+    <link rel="shortcut icon" href="./icons/favicon.ico" />
+
+    <!-- iOS Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Timer" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="./site.webmanifest" />
+
 </head>
 <body>
-  <div class="app-container">
-    
-    <!-- SETUP VIEW -->
-    <section id="setup-view" class="view active">
-      <header>
-        <h1>Workout Setup</h1>
-      </header>
+    <div class="app-container">
+        
+        <!-- SETUP VIEW -->
+        <section id="setup-view" class="view active">
+        <header>
+            <h1>Workout Setup</h1>
+        </header>
 
-      <form id="add-exercise-form" class="card">
-        <div class="input-group">
-          <input type="text" id="ex-name" placeholder="Exercise (e.g. Pushups)" required />
-          <input type="number" id="ex-duration" placeholder="Duration (sec)" min="1" required />
+        <form id="add-exercise-form" class="card">
+            <div class="input-group">
+            <input type="text" id="ex-name" placeholder="Exercise (e.g. Pushups)" required />
+            <input type="number" id="ex-duration" placeholder="Duration (sec)" min="1" required />
+            </div>
+            <button type="submit" class="btn btn-primary">+ Add Exercise</button>
+        </form>
+
+        <div class="card global-settings">
+            <label for="rest-duration">Global Rest Time (seconds):</label>
+            <input type="number" id="rest-duration" min="0" value="20" />
         </div>
-        <button type="submit" class="btn btn-primary">+ Add Exercise</button>
-      </form>
 
-      <div class="card global-settings">
-        <label for="rest-duration">Global Rest Time (seconds):</label>
-        <input type="number" id="rest-duration" min="0" value="20" />
-      </div>
+        <div class="exercise-list-container">
+            <h2>Exercises</h2>
+            <ul id="exercise-list"></ul>
+        </div>
 
-      <div class="exercise-list-container">
-        <h2>Exercises</h2>
-        <ul id="exercise-list"></ul>
-      </div>
+        <button id="start-workout-btn" class="btn btn-accent btn-large">
+            <span>Start Workout 🚀</span>
+            <span id="start-btn-time" class="btn-subtext">(0s)</span>
+        </button>
 
-      <button id="start-workout-btn" class="btn btn-accent btn-large">Start Workout 🚀</button>
-    </section>
+        <footer class="app-footer">
+            <a href="https://www.flaticon.com/free-icons/gym" title="gym icons" target="_blank" rel="noopener noreferrer">
+                Icon created by Aldo Cervantes - Flaticon
+            </a>
+        </section>
 
     <!-- WORKOUT RUNNER VIEW -->
     <section id="workout-view" class="view">
@@ -66,7 +85,7 @@
     </section>
 
   </div>
-
+  
   <script src="app.js"></script>
 </body>
 </html>

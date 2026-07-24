@@ -94,7 +94,24 @@ input:focus {
 .btn-accent { background: var(--accent-work); color: #000; }
 .btn-danger { background: var(--danger); color: #fff; }
 .btn-control { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); }
-.btn-large { padding: 1.25rem; font-size: 1.25rem; margin-top: auto; }
+
+.btn-large {
+    padding: 1.25rem;
+    font-size: 1.25rem; 
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-subtext {
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.9;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+}
 
 /* Exercise List */
 .exercise-list-container {
@@ -231,4 +248,22 @@ input:focus {
   font-weight: 900;
   z-index: 1;
   margin: 0;
+}
+
+.app-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.app-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.app-footer a:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
