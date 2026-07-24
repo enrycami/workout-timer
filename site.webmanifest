@@ -1,6 +1,11 @@
 {
   "name": "Workout Timer",
   "short_name": "Workout",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "./",
+  "scope": "./",
   "icons": [
     {
       "src": "./icons/web-app-manifest-192x192.png",
@@ -15,8 +20,4 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "start_url": "./index.html"
 }

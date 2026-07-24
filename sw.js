@@ -1,4 +1,4 @@
-const CACHE_NAME = 'interval-timer-v1';
+const CACHE_NAME = 'interval-timer-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -36,7 +36,14 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((cachedResponse) => {
-      return cachedResponse || fetch(e.request);
+      if (cachedResponse) return cachedResponse;
+
+      return fetch(e.request).catch(() => {
+        // Fallback to cached root if navigation fails offline
+        if (e.request.mode === 'navigate') {
+          return caches.match('./');
+        }
+      });
     })
   );
 });
